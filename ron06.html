@@ -1,0 +1,27 @@
+<script>
+    function doThing() {
+        let year = document.getElementById("year").value;
+        year = parseInt(year);
+        let isOK = false;
+
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                if (year % 400 == 0) {  // 100的倍數 又是400的倍數
+                    isOK = true;
+                } else {
+                    isOK = false;
+                }
+            } else { // 4的倍數 但不是100得倍數
+                isOK = true;
+            }
+        } else {    // 不是4的倍數
+            isOK = false;
+        }
+
+        document.getElementById("result").innerHTML = isOK ? '4' : '84';
+    }
+</script>
+
+<input type="number" id="year">
+<input type="button" value="484閏" onclick="doThing()">
+<span id="result"></span>
