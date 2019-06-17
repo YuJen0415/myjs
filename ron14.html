@@ -1,0 +1,35 @@
+<input type="button" id="big" value="大" onclick="big()">
+
+<input type="button" id="small" value="小" onclick="small()">
+<br>
+
+<script>// 陣列
+    let p = [0, 0, 0, 0, 0, 0];
+    function big() {
+        for (i = 0; i < 10000; i++) {
+            let rand = parseInt(Math.random() * 9); // 0~5
+            if (rand > 5) {
+                rand -= 3;
+            }
+            p[rand]++;
+        }
+        roll();
+    }
+
+    function small() {
+        for (i = 0; i < 10000; i++) {
+            let rand = parseInt(Math.random() * 9); // 0~5
+            if (rand > 5) {
+                rand -= 6;
+            }
+            p[rand]++;
+        }
+        roll();
+    }
+
+    function roll() {
+        for (i = 0; i < 6; i++) {
+            document.write(`${i} : ${p[i]} 次<br>`);
+        }
+    }
+</script>
