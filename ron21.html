@@ -1,0 +1,35 @@
+<script>
+    function sayYaV2(name = 'World') {
+        document.write(`Ya! ${name}<br>`);
+    }
+
+    function sayYa(ns) {
+        for (let name of ns)
+            document.write(`Ya! ${name}<br>`);
+    }
+
+    function sayYaV3(...names) {
+        // document.write(typeof names + Array.isArray(names));  都是陣列
+        for (let name of names)
+            document.write(`Ya! ${name}<br>`);
+    }
+
+    let names = ['brad', 'tony', 'bryan'];
+    sayYa(names);
+    sayYaV2();
+    sayYaV2('bryan');
+
+    sayYaV3();
+    sayYaV3('A');
+    sayYaV3('a', 'b');
+
+    let f1 = function (x, y) {
+        return 2 * x + y;
+    }
+
+    let f2 = f1;
+    let v2 = f2(5, 3);
+    let v1 = f1(2, 3);
+    document.write(v1);
+    document.write(v2);
+</script>

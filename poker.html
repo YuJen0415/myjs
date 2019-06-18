@@ -1,10 +1,16 @@
 <script>
     let poker = [];
 
-    for (let i = 0; i < 52; i++) {
-        let rand = parseInt(Math.random() * 52);
-        if (poker[i] != null) {
-            poker[i] = rand;
+    for (let i = 0; i < 12; i++) {
+        let rand = parseInt(Math.random() * 12);
+        if (poker[rand] == null) {
+            poker[rand] = i;
+        } else {
+            i--;
         }
+    }
+
+    for (let j = 0; j < 12; j++) {
+        document.write(poker[j]+"<br>");
     }
 </script>

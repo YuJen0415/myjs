@@ -16,6 +16,10 @@
         let x = document.getElementById("x").value;
         let y = document.getElementById("y").value;
         let result = document.getElementById("result");
+        
+        // 另一種拿到select值的方法
+        let op = document.getElementById("mySelect");
+        let opVal = op.selectedIndex; // 0 1 2 3
 
         x = parseInt(x);
         y = parseInt(y);
