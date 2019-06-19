@@ -1,0 +1,78 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+<script src="ronapis.js"></script>
+
+<script>
+    let counter = 0;
+    let timer;
+    let loop;
+    let cr;
+
+    let str = "<div class='spinner-grow text-primary' role='status' style='width: 3rem; height: 3rem;'></div>";
+    let str1 = "<div class='spinner-grow text-success' role='status' style='width: 3rem; height: 3rem;'></div>";
+    let str2 = "<div class='spinner-grow text-danger' role='status' style='width: 3rem; height: 3rem;'></div>";
+
+    function circle() {
+        loop = document.getElementById("waiting");
+        loop.innerHTML = str + str1 + str2;
+        cr = document.getElementById("checkResult");
+        cr.innerHTML = "<span class='badge badge-pill badge-warning'>Loading...</span>";
+        
+        timer = setInterval(countDown, 1 * 1000);
+    }
+
+    function countDown() {
+        counter++;
+        console.log(counter);
+        if (counter == 3) {
+            clearInterval(timer);
+            counter = 0;
+            loop.innerHTML = "";
+            show();
+        }
+    }
+
+    function ckPrime() {
+        let p = document.getElementById("id").value;
+        cr = document.getElementById("checkResult");
+        cr.innerHTML = "";
+        pStr = checkPrime(p);
+        circle();
+    }
+
+    function show() {
+        cr = document.getElementById("checkResult");
+        cr.innerHTML = "";
+
+        for (let k = 0; k < pStr.length; k++) {
+            cr.innerHTML += (pStr[k] + "&emsp;");
+        }
+    }
+
+</script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm">
+            <h1><strong>找出範圍內的全部質數</strong></h1>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <div class="input-group mb-3">
+                <input type="text" id="id" class="form-control" aria-describedby="button-addon2"
+                    placeholder="Insert the number" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <input type="button" onclick="ckPrime()" value="CHECK" class="btn btn-success" id="button-addon2">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm" style="background-color: cadetblue">
+            <span id="waiting"></span>
+            <span id="checkResult"></span>
+        </div>
+    </div>
+</div>

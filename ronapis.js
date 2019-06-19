@@ -46,7 +46,7 @@ function createAnswer(n) {
 
 function checkAB(ans, gus) {
     let a = 0, b = 0;
-    for (let i = 0; i< gus.length; i++) {
+    for (let i = 0; i < gus.length; i++) {
         // for (let j = 0; j < gus.length; j++) {
         //     if (ans[i] == gus[j]) {
         //         if (i == j) {
@@ -64,4 +64,30 @@ function checkAB(ans, gus) {
     }
 
     return a + 'A' + b + 'B';
+}
+
+function checkPrime(p) {
+    let pStr = [];
+    pStr[0] = 1; // 1是質數
+    let count = 1; // 質數數量
+    let flag = 0;   // 0 為質數
+
+    for (let i = 2; i <= p; i++) {
+        for (let j = 2; j * j <= i; j++) {
+            if (i % j == 0) {
+                flag = 1;
+                break;  // 找到因數就出迴圈
+            }
+        }
+
+        // 找不到因數，判斷i為質數
+        if (flag == 0) {
+            pStr[count] = i;
+            count++;
+        } else {
+            flag = 0; // initial
+        }
+    }
+
+    return pStr;
 }
