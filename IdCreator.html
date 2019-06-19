@@ -1,2 +1,161 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
 <script src="ronapis.js"></script>
 
+<script>
+    function generate() {
+        let city = document.getElementById("City").selectedIndex;
+        city += 10;
+
+        let sex = document.getElementById("sex").selectedIndex;
+        sex++;
+
+        var genRandom;
+        genRandom = (Math.random());
+        let value = (genRandom.toString()).substring(2, 9); //少一碼，用計算後的餘數補上
+        let tail = generateIdCheck(city + "" + sex + value); // 加一個"" 防止city跟sex搞在一起
+        let id = city + "" + sex + value + tail;
+        show(id, city);
+    }
+
+    function show(id, city) {
+        let idLog = '';
+        city = parseInt(city) - 10;
+        let letters = 'ABCDEFGHJKLMNPQRSTUVXYWZIO';
+        idLog = letters[city] + id.substr(2, 11);
+        document.getElementById('log').innerHTML = idLog;
+    }
+
+    function generateIdCheck(id) {
+        let n1 = parseInt(id.substr(0, 1));
+        let n2 = parseInt(id.substr(1, 1));
+        let n3 = parseInt(id.substr(2, 1));
+        let n4 = parseInt(id.substr(3, 1));
+        let n5 = parseInt(id.substr(4, 1));
+        let n6 = parseInt(id.substr(5, 1));
+        let n7 = parseInt(id.substr(6, 1));
+        let n8 = parseInt(id.substr(7, 1));
+        let n9 = parseInt(id.substr(8, 1));
+        let n10 = parseInt(id.substr(9, 1));
+
+        let sum = n1 * 1 + n2 * 9 + n3 * 8 + n4 * 7 + n5 * 6 + n6 * 5 + n7 * 4 + n8 * 3 + n9 * 2 + n10 * 1;
+
+        let result = sum % 10;
+        if (result != 0) {
+            result = 10 - result;
+        }
+
+        // 回傳補上餘數為10的數字讓身分證字號正確
+        return result;
+    }
+
+    function ckId() {
+        let id = document.getElementById("id").value;
+        let cr = document.getElementById("checkResult");
+        let str;
+        if (id == "") {
+            str = "<div class='alert alert-warning' role='alert'>未輸入身分證!</div>";
+            cr.innerHTML = str;
+
+            return;
+        }
+
+        let isRight = checkTWId(id);
+
+        if (!isRight) {
+            str = "<div class='alert alert-danger' role='alert'>身分證格式錯誤!</div>";
+            cr.innerHTML = str;
+        } else {
+            str = "<div class='alert alert-success' role='alert'>身分證正確!</div>";
+            cr.innerHTML = str;
+        }
+    }
+</script>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm"></div>
+            <div class="col-sm">
+                <h1 style="font-weight:bold;">身分證字號產生器</h1>
+            </div>
+            <div class="col-sm"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+                <select id="City" class="form-control">
+                    <option>臺北市(A)</option>
+                    <option>臺中市(B)</option>
+                    <option>基隆市(C)</option>
+                    <option>臺南市(D)</option>
+                    <option>高雄市(E)</option>
+                    <option>臺北縣(F)</option>
+                    <option>宜蘭縣(G)</option>
+                    <option>桃園縣(H)</option>
+                    <option>新竹縣(J)</option>
+                    <option>苗栗縣(K)</option>
+                    <option>臺中縣(L)</option>
+                    <option>南投縣(M)</option>
+                    <option>彰化縣(N)</option>
+                    <option>雲林縣(P)</option>
+                    <option>嘉義縣(Q)</option>
+                    <option>臺南縣(R)</option>
+                    <option>高雄縣(S)</option>
+                    <option>屏東縣(T)</option>
+                    <option>花蓮縣(U)</option>
+                    <option>臺東縣(V)</option>
+                    <option>澎湖縣(X)</option>
+                    <option>陽明山(Y)</option>
+                    <option>金門縣(W)</option>
+                    <option>連江縣(Z)</option>
+                    <option>嘉義市(I)</option>
+                    <option>新竹市(O)</option>
+                </select>
+            </div>
+            <div class="col-sm">
+                <select id="sex" multiple class="form-control" style="height: 51px;">
+                    <option selected>Male 男 (1)</option>
+                    <option>Female 女 (2)</option>
+                </select>
+            </div>
+            <div class="col-sm-3">
+                <input type="button" value="Generate" onClick="generate()" class="btn btn-outline-secondary">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm">
+                <div class="alert alert-warning" role="alert">
+                    你產生的身分證字號：
+                </div>
+            </div>
+            <div class="col-sm">
+                <div id="log" class="alert alert-primary" role="alert">身分證字號在這裡生成</div>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+                <div class="alert alert-secondary" role="alert">
+                    附贈一個身分證驗證器：
+                </div>
+            </div>
+            <div class="col-sm">
+
+                <div class="input-group mb-3">
+                    <input type="text" id="id" class="form-control" aria-describedby="button-addon2"
+                        placeholder="填入想測試的身分證字號" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <input type="button" onclick="ckId()" value="CHECK" class="btn btn-success" id="button-addon2">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <span id="checkResult"></span>
+            </div>
+        </div>
+    </div>
+</body>
