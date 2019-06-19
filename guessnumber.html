@@ -1,0 +1,145 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+<script src="ronapis.js"></script>
+<script>
+    let log = '';       // 猜過的
+    let count = 0;    // 猜了幾次
+    let flag = 0;   // reset不詢問:1
+    let op = 3;     // 選擇的數字，預設3
+    let answer = createAnswer(op);  // 預設答案
+    let limit = 8;      // 最多猜幾次，預設為 op *3 -1
+    let proGress = 0;
+
+    function setNum() {
+        flag = 1;
+        reset();
+        op = document.getElementById("many").selectedIndex;
+        op += 3;
+        limit = op * 3 - 1;
+        answer = createAnswer(op);
+    }
+
+    function doGuess() {
+        let gu = document.getElementById('guess');
+        let guess = gu.value;
+        let result = checkAB(answer, guess);
+
+        // 字數檢查
+        if (guess.length != op) {
+            alert("輸入字數錯誤，請輸入與答案一樣多的數字");
+            return;
+        }
+
+        // 猜對了
+        if (result == op + 'A0B') {
+            flag = 1;
+            alert('win');
+            reset();
+        } else {
+            count++;
+            proGress = (count * 100) / limit;
+            setProgress(proGress);
+            alert(result);
+            log += "第" + count + "次 : " + guess + " => " + result + "<br>";
+            document.getElementById('log').innerHTML = log;
+            gu.value = '';
+            gu.focus();
+
+            if (count == limit) {
+                alert("廢!  答案是" + answer);
+                flag = 1;
+                reset();
+            }
+        }
+    }
+
+    function setProgress(value) {
+        let sp = document.getElementById("prog");
+        value = parseInt(value);
+        sp.style.width = value + "%";
+        sp.textContent = "還有" +  (limit-count) + "次!!";
+        
+        // 次數快用完時改成紅色提醒玩家
+        if (value >= 75 && value < 100) {
+            sp.className = ("progress-bar bg-danger");
+            sp.textContent = "只剩下" + (limit-count) + "次啦!!";
+        }
+    }
+
+    function reset() {
+        if (flag == 0) {
+            if (!confirm("Reset?????")) return;
+        }
+
+        answer = createAnswer(op);
+        log = '';
+        count = 0;
+        flag = 0;
+        proGress = 0;
+        setProgress(proGress);
+        document.getElementById('log').innerHTML = log;
+        document.getElementById('guess').value = '';
+        document.getElementById('guess').focus();
+    }
+</script>
+
+<h1>Guess Number Game</h1>
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <label class="alert alert-primary" role="alert">你想猜幾個字</label>
+        </div>
+        <div class="col-sm"></div>
+        <div class="col-sm"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm">
+            <select class="form-control" id="many">
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+        </div>
+        <div class="col-sm">
+            <input type="button" onclick="setNum()" value="設定" class="btn btn-outline-primary">
+        </div>
+        <div class="col-sm"></div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-sm">
+            <div class="input-group mb-3">
+                <input type="number" id="guess" class="form-control" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                    <input type="button" onclick="doGuess()" value="猜下去" class="btn btn-outline-success"
+                        id="button-addon2">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <input type="button" onclick="reset()" value="Reset" class="btn btn-outline-danger">
+        </div>
+        <div class="col-sm"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm">
+            <div class="progress" style="height: 20px;">
+                <div class='progress-bar bg-info' role='progressbar' style='width: 0%' id="prog"></div>
+            </div>
+        </div>
+        <div class="col-sm"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm">
+            <div id="log"></div>
+        </div>
+        <div class="col-sm"></div>
+        <div class="col-sm"></div>
+    </div>
+</div>

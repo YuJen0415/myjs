@@ -1,0 +1,17 @@
+<script src="ronapis.js"></script>
+
+<script>
+    function ckId() {
+        let id = document.getElementById("id").value;
+        let isRight = checkTWId(id);
+
+        if(!isRight) {
+            alert("XXX");
+        } else {
+            alert("Y");
+        }
+    }
+</script>
+
+<input type="text" id="id">
+<input type="button" onclick="ckId()" value="CHECK">
