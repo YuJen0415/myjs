@@ -1,0 +1,27 @@
+<script>
+    function test1() {
+        let n = parseInt(Math.random() * 101);
+        document.write(n + "<br>");
+
+        try{
+            test2(n);
+            document.write("OOOK<br>");
+        } catch(e){
+            document.write("謀告<br>");
+            return;
+        } finally { // 就算try 或catch有return 這裡一定會執行
+            document.write("finally<br>");
+        }
+
+        document.write("87-Bryan<br>");
+    }
+    function test2(a) {
+        if (a >=60) {
+            document.write("test2, OK<br>");
+        } else {
+            throw "NOOOO";
+        }
+    }
+</script>
+
+<input type="button" value="test" onclick="test1()">

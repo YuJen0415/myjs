@@ -1,0 +1,48 @@
+<script>
+
+    let body = document.createElement('body');
+    document.body = body;
+
+    let table = document.createElement('table');
+    body.appendChild(table);
+    table.setAttribute('border', '1');
+    table.setAttribute('width', '100%');
+    // for (let key in table) {
+    //     console.log(key + ":" + table[key]);
+    // }
+
+    // own version
+    // for (let i = 0; i < 3; i++) {
+    //     let tr = document.createElement('tr');
+    //     table.appendChild(tr);
+    //     for (let j = 0; j < 3; j++) {
+    //         let td = document.createElement('td');
+    //         let str = '';
+
+    //         for (let k=1;k<=9;k++) {
+    //             str += "1 x " + k + " = " + 1*k + "<br>";
+    //         }
+    //         td.innerHTML = str;
+
+    //         tr.appendChild(td);
+    //     }
+    // }
+
+    // class version
+    for (let k = 0; k < 2; k++) {
+        let tr = document.createElement('tr');
+        table.appendChild(tr);
+        for (let i = 2; i < 6; i++) {
+            let td = document.createElement('td');
+            tr.appendChild(td);
+            let newi = i + k * 4;
+            for (let j = 1; j <= 9; j++) {
+                td.innerHTML += `${newi} x ${j} = ${newi * j}<br>`;
+            }
+        }
+    }
+
+
+
+
+</script>

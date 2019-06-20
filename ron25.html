@@ -1,0 +1,49 @@
+<script>
+    let bike = new Object();
+    bike.speed = 12;
+    bike.gear = 2;
+    bike.DeJaVu = 0;
+    bike.upSpeed = function () {
+        this.speed = this.speed * this.gear * 1.2;
+    }
+
+    bike.downSpeed = function () {
+        this.speed = this.speed * 0.7;
+    }
+
+    document.write(bike.speed + "<br>");
+    bike.upSpeed(); bike.upSpeed(); bike.upSpeed();
+    bike.downSpeed();
+    document.write(bike.speed + "<br>");
+
+    // bike2(物件) 以下為成員
+    let bike2 = {
+        speed: 4,       // 屬性
+        gear: 4,
+        upSpeed: function () {       // 方法
+            this.speed = this.speed * 1.4;
+        }
+    };
+
+    document.write(bike2.speed + "<br>");
+    bike2.upSpeed(); bike2.upSpeed(); bike2.upSpeed();
+
+    document.write(bike2.speed + "<br>");
+
+    bike2['upSpeed']();
+    document.write(bike2.speed + "<br>");
+    let method = 'upSpeed';
+    bike2[method]();
+    document.write(bike2.speed + "<hr>");
+
+    for (let key in bike2) {
+        document.write(key + ":" + bike2[key] + "<br>");
+    }
+
+    document.write("<hr>");
+    var aa = 123;
+    let bb = 456;
+    for (let key in window) {
+        document.write(key + ":" + window[key] + "<br>");
+    }
+</script>

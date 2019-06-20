@@ -1,0 +1,82 @@
+<script src="ronapis.js"></script>
+
+<canvas id="canvas" width="800" height="600" style="border:1px solid black"></canvas>
+<script>
+    let ctx = canvas.getContext('2d');
+    let bg = new Image();
+    let ballX = 10, ballY = 10;
+
+    let dx = 4, dy = 4;
+    let count = 0;
+
+    bg.src = 'bg.jpg';
+    let ball = new Image();
+    let ball1 = new Image();
+    let ball2 = new Image();
+    let ballImg = [ball, ball1, ball2];
+    let balls = [];
+
+    let ballObj = {
+        x: 0,
+        y: 0,
+        dx: 0,
+        dy: 0,
+        img: 0
+    };
+
+    bg.onload = function () {
+        ctx.drawImage(bg, 0, 0);
+        ball.src = "ball.png";
+        ball1.src = "ball1.png";
+        ball2.src = "ball2.png";
+        // ball.onload = function () {
+        //     ctx.drawImage(ball, ballX, ballY);
+        // }
+
+    }
+
+    function refreshView() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(bg, 0, 0);
+        for (let i = 0; i < balls.length; i++) {
+            ctx.drawImage(ballImg[balls[i].img], balls[i].x, balls[i].y);
+        }
+    }
+
+    function go() {
+        for (let i = 0; i < balls.length; i++) {
+            moveBall(balls[i]);
+        }
+    }
+
+    canvas.onmousedown = function (e) {
+        let ballObject = clone(ballObj);
+
+        ballObject.x= e.offsetX - 24;
+        ballObject.y= e.offsetY - 24;
+        ballObject.dx= parseInt(Math.random() * 8) - 3;
+        ballObject.dy= parseInt(Math.random() * 8) - 3;
+        ballObject.img= parseInt(Math.random() * 3);
+
+        balls[balls.length] = ballObject;
+    }
+
+    function moveBall(obj) {
+        if (obj.x < 0 || obj.x + 48 > canvas.width) {
+            obj.dx *= -1;
+        }
+
+        if (obj.y < 0 || obj.y + 48 > canvas.height) {
+            obj.dy *= -1;
+        }
+        obj.x += obj.dx;
+        obj.y += obj.dy;
+    }
+
+    setInterval(refreshView, 30);
+    setInterval(go, 60);
+
+</script>
+
+<button onclick="go()">GOGOGO</button>
+<button onclick="newBall()">NEW BALL</button>

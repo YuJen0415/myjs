@@ -1,0 +1,21 @@
+<script>
+let a1 = [];
+a1['name'] = 'Bryan';
+a1['age'] = 25;
+a1['eat'] = function() {
+    document.write(this.name + " eat shit.<br>");
+}
+
+a1.eat();
+
+function test1 () {
+    let aa = 87;
+    let bb = 'Bryan';
+    let cc = 78;
+
+    return [aa, bb, cc];
+}
+
+let [x, y, z] = test1();
+document.write(x + ":" + y + ":" + z);
+</script>

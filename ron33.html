@@ -1,0 +1,72 @@
+<h1 id="head">
+
+</h1>
+<hr>
+
+<canvas id="canvas" width="480" height="320" style="border:1px solid black"></canvas>
+<button onclick="clearCanvas()">清除</button>
+<button onclick="moveBall()">球動</button>
+<script>
+    head.innerHTML = 'Stupid Bryan';
+
+    let ctx = canvas.getContext('2d');
+    let isDrag = false;
+
+    // ctx.fillStyle = 'rgb(255,0,0)';
+    // ctx.fillRect(50, 50, 100, 120);
+
+    // ctx.fillStyle = 'rgb(255,255,0,0.5)';
+    // ctx.fillRect(100, 100, 100, 120);
+
+    // ctx.strokeStyle = 'rgb(0, 0, 255)';
+    // ctx.strokeRect(100, 100, 100, 100);
+
+    // ctx.beginPath();
+    // ctx.moveTo(75, 50);
+    // ctx.lineTo(100, 75);
+    // ctx.lineTo(100, 25);
+    // ctx.fill();
+
+    
+    // canvas.onmousemove = function (e) {
+    //     canvas.onmousedown = function (e) {
+    //         console.log("原本的點" + e.offsetX + " , " + e.offsetY);
+    //     }
+    //     canvas.onmouseup = function (e) {
+    //         console.log("放下的點" + e.offsetX + " , " + e.offsetY);
+    //     }
+    // }
+
+    function clearCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    canvas.onmousedown = function (e) {
+        isDrag = true;
+        ctx.beginPath();
+        ctx.moveTo(e.offsetX, e.offsetY);
+    }
+
+    canvas.onmouseup = function (e) {
+        isDrag = false;
+    }
+
+    canvas.onmousemove = function (e) {
+        if (isDrag) {
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+        }
+    }
+
+    let ball = new Image();
+    ball.src = "ball.png";
+    ball.onload = function() {
+        ctx.drawImage(ball, 240, 240);
+    }
+
+    function moveBall () {
+        ctx.clearRect(240,240, 48,48);
+        ctx.drawImage(ball, 0, 0);
+    }
+    
+</script>
