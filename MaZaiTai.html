@@ -1,0 +1,280 @@
+<html>
+
+<head>
+    <style>
+        td {
+            width: 100px;
+            height: 100px;
+        }
+
+        #row32 {
+            border-top: 0;
+            border-bottom: 0;
+            text-align: center;
+        }
+
+        #row22 {
+            border-bottom: 0;
+        }
+
+        #row42 {
+            border-top: 0;
+        }
+
+        p {
+            font-size: 2rem;
+        }
+    </style>
+
+</head>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+<script src="ronapis.js"></script>
+
+
+<body>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <table border="1">
+                    <!-- row 1 -->
+                    <tr>
+                        <td id="m1" class="bg-warning">
+                            <img src="img/bell.png">
+                        </td>
+                        <td id="m2">
+                            <img src="img/banana.png">
+                        </td>
+                        <td id="m3">
+                            <img src="img/apple.png">
+                        </td>
+                        <td id="m4">
+                            <img src="img/dog.png">
+                        </td>
+                        <td id="m5">
+                            <img src="img/bell.png">
+                        </td>
+                        <td id="m6">
+                            <img src="img/apple.png">
+                        </td>
+                    </tr>
+                    <!-- row 2 -->
+                    <tr>
+                        <td id="m18">
+                            <img src="img/dog.png">
+                        </td>
+                        <td colspan="4" id="row22"></td>
+                        <td id="m7">
+                            <img src="img/banana.png">
+                        </td>
+                    </tr>
+                    <!-- row 3 -->
+                    <tr>
+                        <td id="m17">
+                            <img src="img/apple.png">
+                        </td>
+                        <td colspan="4" id="row32">
+                            <button class="btn-lg btn-outline-danger" onclick="start()" id="start">開始!!</button>
+                            <!-- 按下後不能再按 -->
+                        </td>
+                        <td id="m8">
+                            <img src="img/bell.png">
+                        </td>
+                    </tr>
+                    <!-- row 4 -->
+                    <tr>
+                        <td id="m16">
+                            <img src="img/banana.png">
+                        </td>
+                        <td colspan="4" id="row42"></td>
+                        <td id="m9">
+                            <img src="img/dog.png">
+                        </td>
+                    </tr>
+                    <!-- row 5 -->
+                    <tr>
+                        <td id="m15">
+                            <img src="img/bell.png">
+                        </td>
+                        <td id="m14">
+                            <img src="img/dog.png">
+                        </td>
+                        <td id="m13">
+                            <img src="img/apple.png">
+                        </td>
+                        <td id="m12">
+                            <img src="img/bell.png">
+                        </td>
+                        <td id="m11">
+                            <img src="img/banana.png">
+                        </td>
+                        <td id="m10">
+                            <img src="img/apple.png">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- 計分區 -->
+            <div class="col-sm">
+                <div class="row">
+                    <div class="col-sm">
+                        <img src="img/bell.png">
+                    </div>
+                    <div class="col-sm">
+                        <img src="img/apple.png">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <p class="p-3 mb-2 bg-info text-dark" id="bellPoint">0</p>
+                        <!-- <span >0</span> -->
+                    </div>
+                    <div class="col-sm">
+                        <p class="p-3 mb-2 bg-danger text-dark" id="applePoint">0</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <img src="img/banana.png">
+                    </div>
+                    <div class="col-sm">
+                        <img src="img/dog.png">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <p class="p-3 mb-2 bg-warning text-dark" id="bananaPoint">0</p>
+                    </div>
+                    <div class="col-sm">
+                        <p class="p-3 mb-2 bg-success text-dark" id="dogPoint">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let mz = [];    // 格子集合
+        let count = 1;  // 目前黃色停留的格子
+        let delay = 1000;   // 起始速度(延遲時間)
+        let stop = document.getElementById("start");
+        let shine;  // 閃亮用
+        let shineFlag = true;   // true : 亮
+
+        // 各自計分
+        let bellP = 0;
+        let appleP = 0;
+        let banaP = 0;
+        let dogP = 0;
+
+
+        for (let i = 1; i <= 18; i++) {
+            // id配置
+            mz[i] = "m" + i;
+        }
+
+        function start() {
+            // 按鈕失效
+            stop.disabled = true;
+            // 停止閃亮
+            clearInterval(shine);
+            // 開始跑
+            fast();
+        }
+
+        // 開頭的加速滑動
+        function fast() {
+            if (delay < 100) {
+                slide();
+                return;
+            }
+            yellow();
+
+            setTimeout(fast, delay);
+            delay -= delay / 2;
+        }
+        // 以最快速滑動
+        function slide() {
+            var timesRun = 0;
+            let slideTime = parseInt(Math.random() * 15) + 30;
+
+            var interval = setInterval(function () {
+                timesRun += 1;
+                yellow();
+                // 設定一個隨機滑動次數
+                if (timesRun === slideTime) {
+                    clearInterval(interval);
+                    setTimeout(slow, delay);
+                }
+            }, delay);
+        }
+        // 收尾的減速滑動
+        function slow() {
+            if (delay >= 2000) {
+                // 按鈕恢復
+                stop.disabled = false;
+                // 起始時間恢復
+                delay = 1000;
+                // 計分
+                point();
+                // 設定為亮
+                shineFlag = true;
+                shine = setInterval(shining, 300);
+                return;
+            }
+
+            yellow();
+            setTimeout(slow, delay);
+            delay *= 1.5;
+        }
+
+
+
+        function shining() {
+            if (shineFlag) {
+                document.getElementById(mz[count]).className = ("bg-white");
+                shineFlag = false;
+            } else {
+                document.getElementById(mz[count]).className = ("bg-warning");
+                shineFlag = true;
+            }
+        }
+
+        function point() {
+            switch (count) {
+                case 1: case 5: case 8: case 12: case 15:
+                    bellP++;
+                    document.getElementById("bellPoint").innerHTML = bellP;
+                    break;
+                case 3: case 6: case 10: case 13: case 17:
+                    appleP++;
+                    document.getElementById("applePoint").innerHTML = appleP;
+                    break;
+                case 2: case 7: case 11: case 16:
+                    banaP++;
+                    document.getElementById("bananaPoint").innerHTML = banaP;
+                    break;
+                case 4: case 9: case 14: case 18:
+                    dogP++;
+                    document.getElementById("dogPoint").innerHTML = dogP;
+                    break;
+            }
+        }
+
+        function yellow() {
+            document.getElementById(mz[count]).className = ("bg-white");
+            if (count == 18) {  // 最後一個
+                count = 0;
+            }
+
+            count++;
+            document.getElementById(mz[count]).className = ("bg-warning");
+        }
+    </script>
+
+</body>
+
+</html>
